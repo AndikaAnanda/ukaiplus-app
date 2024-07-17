@@ -20,20 +20,6 @@ const Tryout = sequelize.define('Tryout', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-},
-{
-    timestamps: true,
-    createdAt: true,
-    updatedAt: false,
-})
-
-// One-to-many relationship between User and Tryout
-User.hasMany(Tryout, {
-    foreignKey: 'user_id',
-})
-
-Tryout.belongsTo(User, {
-    foreignKey: 'user_id'
 })
 
 export default Tryout
