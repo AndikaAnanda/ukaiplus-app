@@ -1,6 +1,7 @@
 import express from 'express'
 import User from '../model/User.js'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 const router = express.Router()
 
@@ -30,6 +31,7 @@ router.post('/register', async (req, res) => {
             email: email,
             password: hashedPassword,
         })
+
         res.status(201).json({ message: "Successfully registered" })
     } catch (error) {
         console.log(error)
@@ -54,11 +56,12 @@ router.post('/login', async (req, res) => {
         }
         const hashedPassword = existingUser.password
         const isPasswordMatch = await bcrypt.compare(password, hashedPassword)
-        console.log(isPasswordMatch)
         if (!isPasswordMatch) {
             return res.status(401).json({ message: "Invalid password"})
         }
-        res.status(200).json({ message: "Login successful" })
+        // Create token
+        const token = jwt.sign({ userId: existingUser.user_id }, process.env.JWT_SECRET, { expiresIn: '3h' })
+        res.status(200).json({ message: "Login successful", token })
     } catch (error) {
         res.status(500).json({ message: "Internal server error" })   
     }

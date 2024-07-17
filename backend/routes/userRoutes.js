@@ -1,10 +1,11 @@
 import express from 'express'
 import User from '../model/User.js'
+import authMiddleware from '../middleware/authMiddleware.js'
 
 const router = express.Router()
 
 // Retrieve all users data
-router.get('/user', async (req, res) => {
+router.get('/user', authMiddleware, async (req, res) => {
     try {
         const user = await User.findAll({
             attributes: [
@@ -13,7 +14,6 @@ router.get('/user', async (req, res) => {
         })
         res.status(200).json({ user })
     } catch (error) {
-        console.log(error)
         res.status(500).json({ message: "Internal server error" })   
     }
 })
