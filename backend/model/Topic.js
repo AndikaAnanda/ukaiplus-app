@@ -13,4 +13,5 @@ const Topic = sequelize.define('Topics', {
     }
 })
 
+
 export default Topic

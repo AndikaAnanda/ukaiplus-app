@@ -22,4 +22,6 @@ const Tryout = sequelize.define('Tryout', {
     },
 })
 
+
+
 export default Tryout
