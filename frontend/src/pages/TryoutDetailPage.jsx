@@ -21,7 +21,8 @@ const TryoutDetailPage = () => {
   return (
     <>
       <div className="p-4 sm:ml-64 bg-white">
-        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <h1 className='text-3xl font-semibold mt-14'>{tryout.tryout_name}</h1>
+        <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div
             className="block cursor-default p-6 my-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
           >
@@ -65,6 +66,12 @@ const TryoutDetailPage = () => {
               {tryout.tryout_type === 'komprehensif' ? 'Semua topik' : 'Farmakoterapi & Farmasi Klinis'}
             </p>
           </div>
+        </div>
+
+        <div className='flex flex-col justify-center items-start gap-4 mt-4 '>
+            <h3 className='text-lg'>Klik tombol mulai untuk mengerjakan ujian ini</h3>
+            <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Mulai</button>
+
         </div>
       </div>
     </>
