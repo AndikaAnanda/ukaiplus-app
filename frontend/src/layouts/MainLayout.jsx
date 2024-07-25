@@ -1,11 +1,13 @@
-import { Outlet } from 'react-router-dom';
-import { useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import logo from '../assets/logo-ukaiplus.png'
 import { NavLink } from 'react-router-dom';
 
 const MainLayout = () => {
   const [openSidebar, setIsOpenSideBar] = useState(false);
   const [openProfileMenu, setIsOpenProfileMenu] = useState(false);
+  const [userData, setUserData] = useState({})
+  const navigate = useNavigate()
 
   const showSideBar = () => {
     setIsOpenSideBar(!openSidebar);
@@ -14,6 +16,45 @@ const MainLayout = () => {
   const toggleProfileMenu = () => {
     setIsOpenProfileMenu(!openProfileMenu);
   };
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await fetch('/api/user/me', {
+          method: 'GET',
+          credentials: 'include'
+        })
+        if (res.ok) {
+          const data = await res.json()
+          setUserData(data.user)
+          console.log(data.user)
+        } else {
+          navigate('/')
+        }
+      } catch (error) { 
+        console.error(error)
+      }
+    }
+    fetchUserData()
+  }, [navigate])
+
+  const handleLogout = async () => {
+    try{
+      const res = await fetch('/api/logout', {
+        method: 'POST',
+        credentials: 'include'
+      })
+      const result = await res.json()
+      if (res.ok) {
+        console.log('Logout successful', result)
+        navigate('/')
+      } else {
+        console.error('Logout failed')
+      }
+    } catch (error) {
+      console.error('Error: ', error)
+    }
+  }
 
   return (
     <>
@@ -77,13 +118,13 @@ const MainLayout = () => {
                       className="text-sm text-gray-900 dark:text-white"
                       role="none"
                     >
-                      Andika Ananda
+                      {userData.full_name}
                     </p>
                     <p
                       className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
                       role="none"
                     >
-                      andikaananda63@gmail.com
+                      {userData.email}
                     </p>
                   </div>
                   <ul className="py-1" role="none">
@@ -98,7 +139,7 @@ const MainLayout = () => {
                     </li>
                     <li>
                       <a
-                        href="#"
+                        onClick={handleLogout}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                         role="menuitem"
                       >

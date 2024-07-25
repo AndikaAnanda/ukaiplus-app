@@ -14,6 +14,25 @@ export const readUsers = async (req, res) => {
     }
 }
 
+export const readCurrentUser = async (req, res) => {
+    try {
+        const userId = parseInt(req.user.userId)
+        if(isNaN(userId)) {
+            return res.status(400).json({ message: 'Invalid user_id'})
+        }
+        if(!userId) {
+            return res.status(404).json({ message: 'User not found'})
+        }
+        const user = await User.findByPk(userId)
+        if (!user) {
+            return res.status(404).json({ message: 'User not found'})
+        }
+        res.status(200).json({ user })
+    } catch {
+        res.status(500).json({ message: "Internal server error" })  
+    }
+}
+
 // Update user data
 export const updateUser = async (req, res) => {
     try {

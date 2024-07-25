@@ -44,7 +44,6 @@ const Hero = () => {
       const result = await res.json();
       if (res.ok) {
         console.log('Login successful:', result);
-        // Handle successful Login, e.g., update context or redirect
         navigate('/dashboard')
       } else {
         console.error('Login failed:', result.message);
