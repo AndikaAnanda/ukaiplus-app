@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import assistanceImage from '../assets/landing-bg.png';
 import { useState } from 'react';
+import Toast from './Toast';
 
 const Hero = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [showToast, setShowToast] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -11,13 +13,17 @@ const Hero = () => {
     username: '',
     confirmPassword: '',
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const showLoginForm = () => {
     setIsLogin(true);
   };
   const showRegisterForm = () => {
     setIsLogin(false);
+  };
+  const handleShowToast = () => {
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
   };
 
   const handleChange = (e) => {
@@ -44,7 +50,7 @@ const Hero = () => {
       const result = await res.json();
       if (res.ok) {
         console.log('Login successful:', result);
-        navigate('/dashboard')
+        navigate('/dashboard');
       } else {
         console.error('Login failed:', result.message);
       }
@@ -163,10 +169,11 @@ const Hero = () => {
                         id="email"
                         value={formData.email}
                         onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full p-2.5 invalid:focus:ring-red-700 invalid:border-red-700 peer"
                         placeholder="youremail@gmail.com"
                         required
                       />
+                      <p className='text-xs font-normal invisible m-1 text-red-700 peer-invalid:visible'>Email tidak valid</p>
                     </div>
                     <div>
                       <label
@@ -186,7 +193,7 @@ const Hero = () => {
                         required
                       />
                     </div>
-                    <div className="flex items-start">
+                    {/* <div className="flex items-start">
                       <div className="flex items-start">
                         <div className="flex items-center h-5">
                           <input
@@ -210,7 +217,7 @@ const Hero = () => {
                       >
                         Lupa Kata Sandi?
                       </a>
-                    </div>
+                    </div> */}
                     <button
                       type="submit"
                       className="w-full text-white bg-orange-600 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -315,12 +322,19 @@ const Hero = () => {
                     </div>
                     <button
                       type="submit"
+                      onClick={() => handleShowToast()}
                       className="w-full text-white bg-orange-600 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       Register
                     </button>
                   </form>
                 )}
+              </div>
+              <div className='mx-2 mb-2'>
+                <Toast
+                  message={'Registrasi berhasil, silakan login'}
+                  show={showToast}
+                />
               </div>
             </div>
           </div>

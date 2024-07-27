@@ -8,3 +8,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <App />
   </React.StrictMode>,
 )
+
+// deactivate Strict Mode
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//   <div>
+//     <App />
+//   </div>,
+// )
