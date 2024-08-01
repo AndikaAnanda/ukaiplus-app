@@ -23,7 +23,7 @@ export const readTryout = async (req, res) => {
             }
         })
         if (!tryout) {
-            return res.status(404).json({ message: 'Tryout not ffound yet'})
+            return res.status(404).json({ message: 'Tryout not found yet'})
         }
         res.status(200).json({ tryout })
     } catch (error) {

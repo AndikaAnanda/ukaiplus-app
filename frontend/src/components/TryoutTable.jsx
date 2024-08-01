@@ -1,8 +1,19 @@
-const TryoutTable = () => {
+import { FaEllipsisH } from 'react-icons/fa';
+
+const TryoutTable = ({ resultData, tryoutData }) => {
+  // Lookup object for tryout data
+  const tryoutLookup = tryoutData.reduce((acc, tryout) => {
+    acc[tryout.tryout_id] = tryout;
+    return acc;
+  }, {});
+
+  console.log('result: ', resultData)
+  console.log('tryout: ', tryoutData)
+
   return (
-    <div className="relative overflow-x-auto rounded-[16px] border border-slate-300 p-2">
-      <table className="w-full text-sm text-left rtl:text-right shadow rounded-[16px] overflow-hidden text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <div className="relative overflow-x-auto rounded-[16px] bg-white border border-slate-300 p-2">
+      <table className="w-full text-sm font-sans text-left rtl:text-right rounded-[16px] overflow-hidden text-slate-500 dark:text-slate-400">
+        <thead className="text-xs text-slate-700 uppercase bg-slate-50 dark:bg-slate-700 dark:text-slate-400">
           <tr>
             <th scope="col" className="px-6 py-3">
               Tryout
@@ -25,10 +36,40 @@ const TryoutTable = () => {
           </tr>
         </thead>
         <tbody>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {resultData.map((d) => {
+            const t = tryoutLookup[d.tryout_id] || {}
+            const timestamps = d.updatedAt
+            const date = new Date(timestamps)
+            const formattedDate = `${date.getUTCDate()}-${date.getUTCMonth() + 1}-${date.getFullYear()}`
+            return (
+            <tr
+              key={d.result_id}
+              className="bg-white border-b dark:bg-slate-800 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600"
+            >
+              <th
+                scope="row"
+                className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap dark:text-white"
+              >
+                {t.tryout_name}
+              </th>
+              <td className="px-6 py-4">{t.tryout_type}</td>
+              <td className="px-6 py-4">{formattedDate}</td>
+              <td className="px-6 py-4">{d.time_elapsed}</td>
+              <td className="px-6 py-4">{d.score}</td>
+              <td className="px-6 py-4 flex justify-end">
+                <a
+                  href="#"
+                  className="text-slate-900 border py-1 border-slate-300 p-2 rounded hover:bg-slate-200"
+                >
+                  <FaEllipsisH className="text-lg" />
+                </a>
+              </td>
+            </tr>
+          )})}
+          {/* <tr className="bg-white border-b dark:bg-slate-800 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600">
             <th
               scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap dark:text-white"
             >
               Apple MacBook Pro
             </th>
@@ -36,19 +77,19 @@ const TryoutTable = () => {
             <td className="px-6 py-4">Laptop</td>
             <td className="px-6 py-4">$2999</td>
             <td className="px-6 py-4">$2999</td>
-            <td className="px-6 py-4 text-right">
+            <td className="px-6 py-4 flex justify-end">
               <a
                 href="#"
-                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                className="text-slate-900 border py-1 border-slate-300 p-2 rounded hover:bg-slate-200"
               >
-                Edit
+                <FaEllipsisH className="text-lg" />
               </a>
             </td>
           </tr>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <tr className="bg-white border-b dark:bg-slate-800 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600">
             <th
               scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap dark:text-white"
             >
               Microsoft Surface Pro
             </th>
@@ -56,19 +97,19 @@ const TryoutTable = () => {
             <td className="px-6 py-4">Laptop PC</td>
             <td className="px-6 py-4">$1999</td>
             <td className="px-6 py-4">$1999</td>
-            <td className="px-6 py-4 text-right">
+            <td className="px-6 py-4 flex justify-end">
               <a
                 href="#"
-                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                className="text-slate-900 border py-1 border-slate-300 p-2 rounded hover:bg-slate-200"
               >
-                Edit
+                <FaEllipsisH className="text-lg" />
               </a>
             </td>
           </tr>
-          <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <tr className="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-600">
             <th
               scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap dark:text-white"
             >
               Magic Mouse 2
             </th>
@@ -76,15 +117,15 @@ const TryoutTable = () => {
             <td className="px-6 py-4">Accessories</td>
             <td className="px-6 py-4">$99</td>
             <td className="px-6 py-4">$99</td>
-            <td className="px-6 py-4 text-right">
+            <td className="px-6 py-4 flex justify-end">
               <a
                 href="#"
-                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                className="text-slate-900 border py-1 border-slate-300 p-2 rounded hover:bg-slate-200"
               >
-                Edit
+                <FaEllipsisH className="text-lg" />
               </a>
             </td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
     </div>

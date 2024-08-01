@@ -8,4 +8,5 @@ const router = express.Router()
 router.get('/tryout', authMiddleware, readTryouts)
 router.get('/tryout/:tryout_id', authMiddleware, readTryout)
 
+
 export default router

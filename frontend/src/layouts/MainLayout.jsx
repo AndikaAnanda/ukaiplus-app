@@ -43,7 +43,6 @@ const MainLayout = () => {
         method: 'POST',
         credentials: 'include'
       })
-      const result = await res.json()
       if (res.ok) {
         navigate('/')
       } else {
@@ -157,7 +156,7 @@ const MainLayout = () => {
         id="logo-sidebar"
         className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform bg-stone-200 ${
           openSidebar ? 'translate-x-0' : '-translate-x-full'
-        } bg-white border-r border-slate-200 sm:translate-x-0 dark:bg-slate-800 dark:border-slate-700`}
+        } bg-stone-200 border-r border-slate-200 sm:translate-x-0 dark:bg-slate-800 dark:border-slate-700`}
         aria-label="Sidebar"
       >
         <div className="h-full px-3 pb-4 overflow-y-auto bg-stone-200">

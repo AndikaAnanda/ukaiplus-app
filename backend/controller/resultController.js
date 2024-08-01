@@ -75,3 +75,23 @@ export const readResult = async (req, res) => {
         res.status(500).json({ message: 'Internal server error'})
     }
 }
+
+export const readCurrentResult = async (req, res) => {
+    try {
+        const userId = parseInt(req.user.userId)
+        if(isNaN(userId)) {
+            return res.status(400).json({ message: 'Invalid user_id'})
+        }
+        if(!userId) {
+            return res.status(404).json({ message: 'User not found'})
+        }
+        const results = await Result.findAll({
+            where: {
+                user_id: userId
+            }
+        })
+        res.status(200).json({ results })
+    } catch {
+        res.status(500).json({ message: "Internal server error" })  
+    }
+}

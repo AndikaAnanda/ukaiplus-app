@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 const PieChart = () => {
 
   useEffect(() => {
-    console.log('PieChart mounted');
     const chartElement = document.getElementById('pie-chart')
     if (
       chartElement && typeof ApexCharts !== 'undefined'

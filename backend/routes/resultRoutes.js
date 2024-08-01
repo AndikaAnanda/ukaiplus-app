@@ -1,6 +1,7 @@
 import express from 'express'
-import { createResults, readResult, readResults } from '../controller/resultController.js'
+import { createResults, readResult, readResults, readCurrentResult } from '../controller/resultController.js'
 import authMiddleware from '../middleware/authMiddleware.js'
+import { checkMeMiddleware } from '../middleware/checkMeMiddleware.js'
 
 const router = express.Router()
 
@@ -11,6 +12,9 @@ router.post('/result', authMiddleware, createResults)
 router.get('/result', authMiddleware, readResult)
 
 // Retrieve user tryout result
-router.get('/result/:user_id', authMiddleware, readResults)
+router.get('/result/:user_id', authMiddleware, checkMeMiddleware, readResults)
+
+// Retrieve current user tryout result
+router.get('/result/me', authMiddleware, readCurrentResult)
 
 export default router

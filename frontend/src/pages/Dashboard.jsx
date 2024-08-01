@@ -1,7 +1,62 @@
 import TryoutTable from '../components/TryoutTable'
 import PieChart from '../components/PieChart'
 import { FaUsers, FaCheck, FaFlagCheckered } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
 const Dashboard = () => {
+  const [countUsers, setCountUsers] = useState(0)
+  const [resultData, setResultData] = useState([])
+  const [tryoutData, setTryoutData] = useState([])
+  const [countTryoutDone, setCountTryoutDone] = useState(0)
+  const [averageScore, setAverageScore] = useState(0)
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch('/api/user')
+        const data = await res.json()
+        setCountUsers(data.user.length)
+        console.log(data.user.length)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchUsers()
+  }, [])
+
+  useEffect(() => {
+    const fetchResult = async () => {
+      try {
+        const res = await fetch('/api/result/me')
+        const data = await res.json()
+        if(res.ok) {
+          setCountTryoutDone(data.length)
+          setAverageScore((data.score) / data.length)
+          setResultData(data.results)
+          console.log(data.results)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchResult()
+  }, [])
+
+  useEffect(() => {
+    const fetchTryouts = async () => {
+      try {
+        const res = await fetch('/api/tryout')
+        const data = await res.json()
+        if(res.ok) {
+          setTryoutData(data.tryout)
+          console.log(data.tryout)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchTryouts()
+  }, [])
+
   
   return (
     <>
@@ -27,7 +82,7 @@ const Dashboard = () => {
                   Peserta Tryout
                 </p>
                 <h5 className="mb-2 text-3xl font-semibold tracking-tight text-slate-900">
-                  999
+                  { countUsers }
                 </h5>
               </div>
             </div>
@@ -46,7 +101,7 @@ const Dashboard = () => {
                   Tryout Diselesaikan
                 </p>
                 <h5 className="mb-2 text-3xl font-semibold tracking-tight text-slate-900">
-                  2/3
+                  { countTryoutDone || '0'}
                 </h5>
               </div>
             </div>
@@ -64,7 +119,7 @@ const Dashboard = () => {
                   Nilai Rata-Rata
                 </p>
                 <h5 className="mb-2 text-3xl font-semibold tracking-tight text-slate-900">
-                  92.5%
+                 { averageScore || '0'}%
                 </h5>
               </div>
             </div>
@@ -73,7 +128,7 @@ const Dashboard = () => {
           <p className="text-slate-500 text-base">
             Dari seluruh soal yang tersedia, terdapat 8 topik dengan persentase persebaran yang berbeda-beda. (Akan terus berubah)
           </p>
-          <div className='border border-gray-300 rounded-[16px] my-6'>
+          <div className='border bg-white border-gray-300 rounded-[16px] my-6'>
             {/* Deactivate strict mode to solve multiple rendering issue */}
           <PieChart/>
           </div>
@@ -82,7 +137,7 @@ const Dashboard = () => {
             Pantau perkembanganmu dengan melihat riwayat tryout
           </p>
           <div className='py-4'>
-            <TryoutTable/>
+            <TryoutTable resultData={ resultData } tryoutData={ tryoutData }/>
           </div>
         </div>        
       </div>
