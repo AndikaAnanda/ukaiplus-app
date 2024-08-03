@@ -73,7 +73,7 @@ const TryoutDetailPage = () => {
         const data = await res.json();
         if (res.ok) {
           const result = (data.result).find(r => r.tryout_id == tryoutId)
-          setTryoutResult(result)
+          result ? setTryoutResult(result) : setTryoutResult(null)
         }
       } catch (error) {
         console.log(error);

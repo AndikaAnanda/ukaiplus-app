@@ -41,7 +41,7 @@ const TryoutTable = ({ resultData, tryoutData }) => {
             return (
             <tr
               key={d.result_id}
-              className="bg-white border-b dark:bg-slate-800 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600"
+              className={`bg-white border-b hover:bg-slate-50`}
             >
               <th
                 scope="row"

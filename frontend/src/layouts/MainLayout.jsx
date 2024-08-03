@@ -1,13 +1,15 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import logo from '../assets/logo-ukaiplus.png'
+import { useEffect, useRef, useState } from 'react';
+import logo from '../assets/logo-ukaiplus.png';
 import { NavLink } from 'react-router-dom';
 
 const MainLayout = () => {
   const [openSidebar, setIsOpenSideBar] = useState(false);
   const [openProfileMenu, setIsOpenProfileMenu] = useState(false);
-  const [userData, setUserData] = useState({})
-  const navigate = useNavigate()
+  const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
+  const profileMenuRef = useRef(null);
+  const sidebarMenuRef = useRef(null);
 
   const showSideBar = () => {
     setIsOpenSideBar(!openSidebar);
@@ -22,36 +24,68 @@ const MainLayout = () => {
       try {
         const res = await fetch('/api/user/me', {
           method: 'GET',
-          credentials: 'include'
-        })
+          credentials: 'include',
+        });
         if (res.ok) {
-          const data = await res.json()
-          setUserData(data.user)
+          const data = await res.json();
+          setUserData(data.user);
         } else {
-          navigate('/')
+          navigate('/');
         }
-      } catch (error) { 
-        console.error(error)
+      } catch (error) {
+        console.error(error);
       }
-    }
-    fetchUserData()
-  }, [navigate])
+    };
+    fetchUserData();
+  }, [navigate]);
 
   const handleLogout = async () => {
-    try{
+    try {
       const res = await fetch('/api/logout', {
         method: 'POST',
-        credentials: 'include'
-      })
+        credentials: 'include',
+      });
       if (res.ok) {
-        navigate('/')
+        navigate('/');
       } else {
-        console.error('Logout failed')
+        console.error('Logout failed');
       }
     } catch (error) {
-      console.error('Error: ', error)
+      console.error('Error: ', error);
     }
-  }
+  };
+
+  // Hiding profile menu while clicking at the outside element
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        profileMenuRef.current &&
+        !profileMenuRef.current.contains(e.target)
+      ) {
+        setIsOpenProfileMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Hiding sidebar menu while clicking at the outside element
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (
+        sidebarMenuRef.current &&
+        !sidebarMenuRef.current.contains(e.target)
+      ) {
+        setIsOpenSideBar(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -105,6 +139,7 @@ const MainLayout = () => {
                   </button>
                 </div>
                 <div
+                  ref={profileMenuRef}
                   className={`absolute right-0 top-full z-50 ${
                     openProfileMenu ? 'block' : 'hidden'
                   } my-3 text-base list-none bg-white divide-y divide-slate-100 rounded shadow dark:bg-slate-700 dark:divide-slate-600`}
@@ -153,6 +188,7 @@ const MainLayout = () => {
 
       {/** Menambahkan attribute end pada NavLink dashboard karena isActive selalu true */}
       <aside
+        ref={sidebarMenuRef}
         id="logo-sidebar"
         className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform bg-stone-200 ${
           openSidebar ? 'translate-x-0' : '-translate-x-full'
@@ -165,10 +201,10 @@ const MainLayout = () => {
               <NavLink
                 to="/dashboard"
                 end
-                className={({ isActive }) => 
+                className={({ isActive }) =>
                   isActive
-                  ? "flex items-center p-2 border-2 border-violet-500 bg-stone-100 text-slate-900 rounded-lg hover:bg-stone-100 group"
-                  : "flex items-center p-2 bg-stone-200 text-slate-500 rounded-lg hover:bg-slate-100 group"
+                    ? 'flex items-center p-2 border-2 border-violet-500 bg-stone-100 text-slate-900 rounded-lg hover:bg-stone-100 group'
+                    : 'flex items-center p-2 bg-stone-200 text-slate-500 rounded-lg hover:bg-slate-100 group'
                 }
               >
                 <svg
@@ -187,10 +223,10 @@ const MainLayout = () => {
             <li>
               <NavLink
                 to="/dashboard/tryout"
-                className={({ isActive }) => 
+                className={({ isActive }) =>
                   isActive
-                  ? "flex items-center p-2 border-2 border-violet-500 bg-stone-100 text-slate-900 rounded-lg hover:bg-stone-100 group"
-                  : "flex items-center p-2 bg-stone-200 text-slate-500 rounded-lg hover:bg-stone-100 group"
+                    ? 'flex items-center p-2 border-2 border-violet-500 bg-stone-100 text-slate-900 rounded-lg hover:bg-stone-100 group'
+                    : 'flex items-center p-2 bg-stone-200 text-slate-500 rounded-lg hover:bg-stone-100 group'
                 }
               >
                 <svg
@@ -211,10 +247,10 @@ const MainLayout = () => {
             <li>
               <NavLink
                 to="/dashboard/discussion"
-                className={({ isActive }) => 
+                className={({ isActive }) =>
                   isActive
-                  ? "flex items-center p-2 border-2 border-violet-500 bg-stone-100 text-slate-900 rounded-lg hover:bg-stone-100 group"
-                  : "flex items-center p-2 bg-stone-200 text-slate-500 rounded-lg hover:bg-stone-100 group"
+                    ? 'flex items-center p-2 border-2 border-violet-500 bg-stone-100 text-slate-900 rounded-lg hover:bg-stone-100 group'
+                    : 'flex items-center p-2 bg-stone-200 text-slate-500 rounded-lg hover:bg-stone-100 group'
                 }
               >
                 <svg

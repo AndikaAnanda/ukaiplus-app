@@ -85,7 +85,7 @@ const Dashboard = () => {
                   Peserta Tryout
                 </p>
                 <h5 className="mb-2 text-3xl font-semibold tracking-tight text-slate-900">
-                  { countUsers }
+                  { countUsers || '0'}
                 </h5>
               </div>
             </div>
