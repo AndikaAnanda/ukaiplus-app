@@ -85,12 +85,12 @@ export const readCurrentResult = async (req, res) => {
         if(!userId) {
             return res.status(404).json({ message: 'User not found'})
         }
-        const results = await Result.findAll({
+        const result = await Result.findAll({
             where: {
                 user_id: userId
             }
         })
-        res.status(200).json({ results })
+        res.status(200).json({ result })
     } catch {
         res.status(500).json({ message: "Internal server error" })  
     }

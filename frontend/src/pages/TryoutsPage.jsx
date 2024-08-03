@@ -16,26 +16,24 @@ const TryoutsPage = () => {
         fetchTryouts()
     }, [])
   return (
-    <>
-      <div className="p-4 sm:ml-64 bg-stone-100">
+      <div className="p-4 sm:ml-64 min-h-screen bg-stone-100">
         <div className="mt-14">
             {tryouts.map((tryout) => (
                 <Link
                     key={tryout.tryout_id}
                     to={`/dashboard/tryout/${tryout.tryout_id}`}
-                    className="block w-full  p-6 my-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                    className="block w-full  p-6 my-4 bg-white border border-slate-200 rounded-lg shadow hover:bg-slate-100 "
                 >
                     <h5 className="mb-2 text-2xl font-semibold text-slate-900">
                     {tryout.tryout_name}
                     </h5>
                     <p className="font-base text-slate-500 ">
-                    80 Soal, 80 Menit
+                    {tryout.tryout_type === 'komprehensif' ? '200 Soal, 200 Menit' : '80 Soal, 80 Menit'}
                     </p>
                 </Link>
             ))}
         </div>
       </div>
-    </>
   );
 };
 

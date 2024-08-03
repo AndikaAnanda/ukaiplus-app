@@ -66,66 +66,6 @@ const TryoutTable = ({ resultData, tryoutData }) => {
               </td>
             </tr>
           )})}
-          {/* <tr className="bg-white border-b dark:bg-slate-800 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap dark:text-white"
-            >
-              Apple MacBook Pro
-            </th>
-            <td className="px-6 py-4">Silver</td>
-            <td className="px-6 py-4">Laptop</td>
-            <td className="px-6 py-4">$2999</td>
-            <td className="px-6 py-4">$2999</td>
-            <td className="px-6 py-4 flex justify-end">
-              <a
-                href="#"
-                className="text-slate-900 border py-1 border-slate-300 p-2 rounded hover:bg-slate-200"
-              >
-                <FaEllipsisH className="text-lg" />
-              </a>
-            </td>
-          </tr>
-          <tr className="bg-white border-b dark:bg-slate-800 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap dark:text-white"
-            >
-              Microsoft Surface Pro
-            </th>
-            <td className="px-6 py-4">White</td>
-            <td className="px-6 py-4">Laptop PC</td>
-            <td className="px-6 py-4">$1999</td>
-            <td className="px-6 py-4">$1999</td>
-            <td className="px-6 py-4 flex justify-end">
-              <a
-                href="#"
-                className="text-slate-900 border py-1 border-slate-300 p-2 rounded hover:bg-slate-200"
-              >
-                <FaEllipsisH className="text-lg" />
-              </a>
-            </td>
-          </tr>
-          <tr className="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-slate-900 whitespace-nowrap dark:text-white"
-            >
-              Magic Mouse 2
-            </th>
-            <td className="px-6 py-4">Black</td>
-            <td className="px-6 py-4">Accessories</td>
-            <td className="px-6 py-4">$99</td>
-            <td className="px-6 py-4">$99</td>
-            <td className="px-6 py-4 flex justify-end">
-              <a
-                href="#"
-                className="text-slate-900 border py-1 border-slate-300 p-2 rounded hover:bg-slate-200"
-              >
-                <FaEllipsisH className="text-lg" />
-              </a>
-            </td>
-          </tr> */}
         </tbody>
       </table>
     </div>

@@ -26,7 +26,10 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchResult = async () => {
       try {
-        const res = await fetch('/api/result/me')
+        const res = await fetch('/api/result/me', {
+          method: 'GET',
+          credentials: 'include'
+        })
         const data = await res.json()
         if(res.ok) {
           setCountTryoutDone(data.length)

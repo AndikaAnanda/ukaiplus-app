@@ -9,10 +9,10 @@ const router = express.Router()
 router.post('/result', authMiddleware, createResults)
 
 // Retrieve all user tryout results
-router.get('/result', authMiddleware, readResult)
+router.get('/result', authMiddleware, readResults)
 
 // Retrieve user tryout result
-router.get('/result/:user_id', authMiddleware, checkMeMiddleware, readResults)
+router.get('/result/:user_id', authMiddleware, checkMeMiddleware, readResult)
 
 // Retrieve current user tryout result
 router.get('/result/me', authMiddleware, readCurrentResult)
