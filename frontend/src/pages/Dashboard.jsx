@@ -32,10 +32,11 @@ const Dashboard = () => {
         })
         const data = await res.json()
         if(res.ok) {
-          setCountTryoutDone(data.length)
-          setAverageScore((data.score) / data.length)
-          setResultData(data.results)
-          console.log(data.results)
+          const results = data.result
+          const totalScore = results.reduce((sum, result) => sum + result.score, 0)
+          setCountTryoutDone(results.length)
+          setAverageScore(totalScore / results.length)
+          setResultData(results)
         }
       } catch (error) {
         console.log(error)
@@ -51,7 +52,6 @@ const Dashboard = () => {
         const data = await res.json()
         if(res.ok) {
           setTryoutData(data.tryout)
-          console.log(data.tryout)
         }
       } catch (error) {
         console.log(error)

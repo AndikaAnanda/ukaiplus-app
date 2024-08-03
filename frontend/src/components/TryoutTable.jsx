@@ -7,9 +7,6 @@ const TryoutTable = ({ resultData, tryoutData }) => {
     return acc;
   }, {});
 
-  console.log('result: ', resultData)
-  console.log('tryout: ', tryoutData)
-
   return (
     <div className="relative overflow-x-auto rounded-[16px] bg-white border border-slate-300 p-2">
       <table className="w-full text-sm font-sans text-left rtl:text-right rounded-[16px] overflow-hidden text-slate-500 dark:text-slate-400">
