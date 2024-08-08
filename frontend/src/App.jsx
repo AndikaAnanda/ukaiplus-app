@@ -11,6 +11,7 @@ import Dashboard from './pages/Dashboard';
 import TryoutsPage from './pages/TryoutsPage';
 import TryoutDetailPage from './pages/TryoutDetailPage';
 import DiscussionPage from './pages/DiscussionPage';
+import TryoutPage from './pages/TryoutPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
         <Route path='discussion' element={<DiscussionPage/>}/>
         <Route path='tryout/:tryoutId' element={<TryoutDetailPage/>} />
       </Route>
+      <Route path='tryout' element={<TryoutPage/>}/>
     </>
 ))
 

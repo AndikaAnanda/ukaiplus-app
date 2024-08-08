@@ -36,7 +36,7 @@ const Leaderboard = ({ user = {}, tryoutResult = {}, tryoutResults = [], users =
               #{currentUserRank || 'N/A'}
             </div>
             <div className="inline-flex text-2xl items-center font-semibold text-slate-50">
-              {tryoutResult.score || '0'}
+              {tryoutResult?.score || '0'}
             </div>
           </div>
         </li>
