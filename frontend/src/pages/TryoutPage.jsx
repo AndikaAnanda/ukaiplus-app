@@ -3,14 +3,41 @@ import { FaFlag } from 'react-icons/fa6';
 import { BsGrid3X3GapFill } from 'react-icons/bs';
 import { MdArrowCircleLeft, MdArrowCircleRight } from 'react-icons/md';
 import logo from '../assets/logo-ukaiplus.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const TryoutPage = () => {
-  const [showQuestionsNumber, setShowQuestionsNumber] = useState(false)
+  const [showQuestionsNumber, setShowQuestionsNumber] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(60);
 
   const toogleShowQuestionsNumber = () => {
-    setShowQuestionsNumber(!showQuestionsNumber)
-  }
+    setShowQuestionsNumber(!showQuestionsNumber);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(timer);
+          alert('Waktu habis!');
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    // clean interval after being unmounted
+    return () => clearInterval(timer);
+  }, []);
+
+  // convert seconds to hh:mm:ss
+  const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes
+      .toString()
+      .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
 
   return (
     <>
@@ -40,6 +67,13 @@ const TryoutPage = () => {
                     href="#"
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                   >
+                    <FaClock className="inline text-lg mb-1 me-2" />
+                    {formatTime(timeLeft)}
+                  </a>
+                  <a
+                    href="#"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
                     <FaCheckDouble className="inline me-2 mb-1" />
                     Selesai
                   </a>
@@ -48,13 +82,6 @@ const TryoutPage = () => {
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                   >
                     <FaPause className="inline text-lg mb-1" />
-                  </a>
-                  <a
-                    href="#"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                  >
-                    <FaClock className="inline text-lg mb-1 me-2" />
-                    01:10:58
                   </a>
                 </div>
               </div>
@@ -72,7 +99,7 @@ const TryoutPage = () => {
         </div>
       </nav>
 
-      <section className="flex items-start space-x-4 p-4"> 
+      <section className="flex items-start space-x-4 p-4">
         {/* question */}
         <div className="flex p-4 border border-slate-300 shadow rounded-lg">
           <div>
@@ -84,9 +111,9 @@ const TryoutPage = () => {
                 </p>
               </div>
               <div className="flex items-center space-x-4 text-xl text-slate-500">
-                <MdArrowCircleLeft />
-                <MdArrowCircleRight />
-                <FaFlag />
+                <MdArrowCircleLeft className="cursor-pointer" />
+                <MdArrowCircleRight className="cursor-pointer" />
+                <FaFlag className="cursor-pointer" />
               </div>
             </div>
             <p className="text-slate-900 font-medium mb-4">
@@ -177,10 +204,19 @@ const TryoutPage = () => {
             </div>
           </div>
         </div>
-        <div className={`bg-white p-4 w-1/2 border border-slate-300 shadow rounded-lg h-screen overflow-y-auto ${showQuestionsNumber ? '' : 'hidden'}`}>
-          <div className='grid grid-cols-5 gap-2'>
-            {Array.from({ length: 200}).map((_, index) => (
-              <button key={index} className='bg-white border border-slate-300 rounded shadow-sm font-medium hover:bg-slate-900 hover:text-white'>{index+1}</button>
+        <div
+          className={`bg-white p-4 w-1/2 border border-slate-300 shadow rounded-lg h-screen overflow-y-auto ${
+            showQuestionsNumber ? '' : 'hidden'
+          }`}
+        >
+          <div className="grid grid-cols-5 gap-2">
+            {Array.from({ length: 200 }).map((_, index) => (
+              <button
+                key={index}
+                className="bg-white border border-slate-300 rounded shadow-sm font-medium hover:bg-slate-900 hover:text-white"
+              >
+                {index + 1}
+              </button>
             ))}
           </div>
         </div>
